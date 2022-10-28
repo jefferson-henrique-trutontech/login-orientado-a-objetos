@@ -6,6 +6,7 @@ class Database():
     def __init__(self, banco):
         self.con = sq.connect(banco)
         self.cur = self.con.cursor()
+        self.cur.execute("CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR (15) UNIQUE NOT NULL, password VARCHAR (15) NOT NULL)")
         self.users = self.cur.execute("SELECT * FROM usuarios").fetchall()
 
 
