@@ -7,6 +7,9 @@ class Database():
         self.con = sq.connect(banco)
         self.cur = self.con.cursor()
         self.cur.execute("CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR (15) UNIQUE NOT NULL, password VARCHAR (15) NOT NULL)")
+        self.atualizarUsuarios()
+    
+    def atualizarUsuarios(self):
         self.users = self.cur.execute("SELECT * FROM usuarios").fetchall()
 
 
@@ -25,6 +28,8 @@ class App(sg.Window):
             if self.ev == sg.WIN_CLOSED:
                 break
             elif self.ev == 'Entrar':
+                self.database.atualizarUsuarios()
+
                 for user in self.database.users:
                     name = user[1]
                     passw = user[2]
